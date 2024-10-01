@@ -4,7 +4,9 @@ defmodule OnTrack.Trips.Trip do
 
   @derive {
     Flop.Schema,
-    filterable: [:trip_name, :origin], sortable: [:trip_name, :origin], default_limit: 10
+    filterable: [:trip_name, :origin, :status],
+    sortable: [:trip_name, :origin, :status],
+    default_limit: 10
   }
 
   schema "trips" do

@@ -1,4 +1,4 @@
-defmodule OnTrackWeb.TripsLive do
+defmodule OnTrackWeb.TripsLive.Index do
   use OnTrackWeb, :live_view
   alias OnTrack.Trips
 
@@ -10,13 +10,19 @@ defmodule OnTrackWeb.TripsLive do
       meta={@meta}
       path={~p"/trips"}
     >
-      <:col :let={trip} label="Name" field={:trip_name}><%= trip.trip_name %></:col>
+      <:col :let={trip} label="Name" field={:trip_name}>
+        <.link navigate={~p"/trips/#{trip.id}"}><%= trip.trip_name %></.link>
+      </:col>
       <:col :let={trip} label="Origin" field={:origin}><%= trip.origin %></:col>
       <:col :let={trip} label="Destination" field={:destination}><%= trip.destination %></:col>
       <:col :let={trip} label="Status" field={:status}><%= trip.status %></:col>
       <:col :let={trip} label="PAX" field={:pax}><%= trip.pax %></:col>
-      <:col :let={trip} label="Start" field={:start_time}><%= trip.start_time %></:col>
-      <:col :let={trip} label="ETA" field={:eta}><%= trip.eta %></:col>
+      <:col :let={trip} label="Start" field={:start_time}>
+        <%= Timex.format!(trip.start_time, "{WDshort}, {D} {h12}:{m} {AM}") %>
+      </:col>
+      <:col :let={trip} label="ETA" field={:eta}>
+        <%= Timex.format!(trip.eta, "{WDshort}, {D} {h12}:{m} {AM}") %>
+      </:col>
     </Flop.Phoenix.table>
 
     <Flop.Phoenix.pagination
