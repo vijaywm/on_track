@@ -23,7 +23,7 @@ defmodule OnTrackWeb.Router do
     get "/", PageController, :home
     # get "/trips", TripController, :index
     # get "/my_trips", TripController, :my_trips
-    live "/trips", TripsLive, :mytrips
+    live "/trips", TripsLive, :index
   end
 
   # Other scopes may use custom stacks.

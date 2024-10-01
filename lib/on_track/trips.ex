@@ -17,8 +17,14 @@ defmodule OnTrack.Trips do
       [%Trip{}, ...]
 
   """
-  def list_trips do
-    Repo.all(Trip)
+  def list_trips(params \\ %{}) do
+    case Flop.validate_and_run(Trip, params, for: Trip) do
+      {:ok, {trips, meta}} ->
+        %{trips: trips, meta: meta}
+
+      {:error, meta} ->
+        %{trips: [], meta: meta}
+    end
   end
 
   @doc """

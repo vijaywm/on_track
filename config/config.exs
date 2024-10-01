@@ -11,6 +11,9 @@ config :on_track,
   ecto_repos: [OnTrack.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+config :flop, 
+  repo: OnTrack.Repo
+
 # Configures the endpoint
 config :on_track, OnTrackWeb.Endpoint,
   url: [host: "localhost"],
