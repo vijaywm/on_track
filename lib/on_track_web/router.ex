@@ -21,8 +21,9 @@ defmodule OnTrackWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    get "/trips", TripController, :index
-    get "/my_trips", TripController, :my_trips
+    # get "/trips", TripController, :index
+    # get "/my_trips", TripController, :my_trips
+    live "/trips", TripsLive, :mytrips
   end
 
   # Other scopes may use custom stacks.

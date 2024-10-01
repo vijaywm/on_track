@@ -9,3 +9,53 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias  OnTrack.Repo
+alias OnTrack.Trips.Trip
+
+Faker.start()
+
+# members = for _ <- 1..10 do
+#   %Member{
+#     name: Faker.Person.name(),
+#     age: Enum.random(18..60),
+#     center: Faker.Address.city(),
+#     trip_group: Enum.random(["Group A", "Group B", "Group C"]),
+#     trip_option: Enum.random(["Basic", "Premium", "VIP"]),
+#     mobile_no: Faker.Phone.EnUs.phone(),
+#   }
+# end
+
+# Enum.each(members, fn member ->
+#   Repo.insert!(member)
+# end)
+
+
+# Helper function to generate a UTC datetime
+random_utc_datetime = fn ->
+    Faker.DateTime.between(~N[2025-02-01 00:00:00], ~N[2025-02-10 00:00:00])
+    |> DateTime.from_naive!("Etc/UTC")
+    |> DateTime.truncate(:second)
+  end
+  
+  # Generate 10 trip records
+  trips = for _ <- 1..100 do
+    %Trip{
+      status: Enum.random(["Running", "Completed", "Cancelled"]),
+      origin: Enum.random(["Adalaj", "Surat", "Rajkot"]),
+      destination: Enum.random(["Jaipur", "Udaipur"]),
+      trip_name: System.unique_integer([:positive]) |> Integer.to_string(),
+      etd: random_utc_datetime.(),
+      eta: random_utc_datetime.(),
+      start_time: random_utc_datetime.(),
+      end_time: random_utc_datetime.(),
+      pax: Enum.random(48..55)
+    }
+  end
+
+  Repo.query!("TRUNCATE TABLE trips RESTART IDENTITY CASCADE")
+  
+  # Insert the generated records into the database
+  Enum.each(trips, fn trip ->
+    Repo.insert!(trip)
+  end)
