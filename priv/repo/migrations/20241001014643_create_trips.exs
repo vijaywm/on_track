@@ -4,18 +4,19 @@ defmodule OnTrack.Repo.Migrations.CreateTrips do
   def change do
     create table(:trips) do
       add :trip_name, :string
+      add :trip_date, :date
+      add :trip_group, :string
       add :origin, :string
       add :destination, :string
-      add :etd, :naive_datetime
+      add :etd, :utc_datetime
       add :eta, :utc_datetime
-      add :status, :string
       add :start_time, :utc_datetime
       add :end_time, :utc_datetime
+      add :status, :string
       add :pax, :integer
+      add :capacity, :integer
 
       timestamps(type: :utc_datetime)
     end
-
-    create unique_index(:trips, [:trip_name])
   end
 end

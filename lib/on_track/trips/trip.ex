@@ -10,15 +10,18 @@ defmodule OnTrack.Trips.Trip do
   }
 
   schema "trips" do
-    field :status, :string
+    field :trip_name, :string
+    field :trip_date, :date
+    field :trip_group, :string
     field :origin, :string
     field :destination, :string
-    field :trip_name, :string
     field :etd, :utc_datetime
     field :eta, :utc_datetime
     field :start_time, :utc_datetime
     field :end_time, :utc_datetime
+    field :status, :string
     field :pax, :integer
+    field :capacity, :integer
 
     timestamps(type: :utc_datetime)
   end

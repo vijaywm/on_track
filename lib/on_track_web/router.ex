@@ -27,6 +27,8 @@ defmodule OnTrackWeb.Router do
 
     live "/trips", TripsLive.Index, :index
     live "/trips/:id", TripsLive.Show, :show
+
+    live "/persons", PersonsLive.Index, :index
   end
 
   # Other scopes may use custom stacks.

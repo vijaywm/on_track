@@ -19,3 +19,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 
 https://excalidraw.com/#room=96657c962190ad2805a4,_q9Tz7_oy-y4mRYWpwqvGQ
+
+mix phx.gen.context Trips Trip trips trip_name:string trip_date:date trip_group:string origin:string destination:string etd:utc_datetime eta:utc_datetime start_time:utc_datetime end_time:utc_datetime status:string pax:integer capacity:integer
+
+mix phx.gen.context Persons Person persons person_id:string full_name:string mobile_no:string center:string age:integer gender:string trip_option:string trip_group:string trip_status:string 

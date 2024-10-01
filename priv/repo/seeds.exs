@@ -10,36 +10,22 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias  OnTrack.Repo
+alias OnTrack.Repo
 alias OnTrack.Trips.Trip
+alias OnTrack.Persons.Person
 
 Faker.start()
 
-# members = for _ <- 1..10 do
-#   %Member{
-#     name: Faker.Person.name(),
-#     age: Enum.random(18..60),
-#     center: Faker.Address.city(),
-#     trip_group: Enum.random(["Group A", "Group B", "Group C"]),
-#     trip_option: Enum.random(["Basic", "Premium", "VIP"]),
-#     mobile_no: Faker.Phone.EnUs.phone(),
-#   }
-# end
-
-# Enum.each(members, fn member ->
-#   Repo.insert!(member)
-# end)
-
-
 # Helper function to generate a UTC datetime
 random_utc_datetime = fn ->
-    Faker.DateTime.between(~N[2025-02-01 00:00:00], ~N[2025-02-10 00:00:00])
-    |> DateTime.from_naive!("Etc/UTC")
-    |> DateTime.truncate(:second)
-  end
-  
-  # Generate 10 trip records
-  trips = for _ <- 1..100 do
+  Faker.DateTime.between(~N[2025-02-01 00:00:00], ~N[2025-02-10 00:00:00])
+  |> DateTime.from_naive!("Etc/UTC")
+  |> DateTime.truncate(:second)
+end
+
+# Generate 10 trip records
+trips =
+  for _ <- 1..100 do
     %Trip{
       status: Enum.random(["Running", "Completed", "Cancelled"]),
       origin: Enum.random(["Adalaj", "Surat", "Rajkot"]),
@@ -53,9 +39,30 @@ random_utc_datetime = fn ->
     }
   end
 
-  Repo.query!("TRUNCATE TABLE trips RESTART IDENTITY CASCADE")
-  
-  # Insert the generated records into the database
-  Enum.each(trips, fn trip ->
-    Repo.insert!(trip)
-  end)
+Repo.query!("TRUNCATE TABLE trips RESTART IDENTITY CASCADE")
+
+# Insert the generated records into the database
+Enum.each(trips, fn trip ->
+  Repo.insert!(trip)
+end)
+
+Repo.query!("TRUNCATE TABLE persons RESTART IDENTITY CASCADE")
+
+persons =
+  for _ <- 1..100 do
+    %Person{
+      person_id: System.unique_integer([:positive]) |> Integer.to_string(),
+      full_name: Faker.Person.name(),
+      mobile_no: Faker.Phone.EnUs.phone(),
+      center: Faker.Address.city(),
+      age: Enum.random(18..60),
+      gender: Enum.random(["M", "F"]),
+      trip_option: Enum.random(["Basic", "Premium", "VIP"]),
+      trip_group: Enum.random(["Group A", "Group B", "Group C"]),
+      trip_status: Enum.random(["On Board", "Off Board", "Transfer"])
+    }
+  end
+
+Enum.each(persons, fn person ->
+  Repo.insert!(person)
+end)
