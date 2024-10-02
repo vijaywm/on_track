@@ -62,7 +62,9 @@ defmodule OnTrack.MixProject do
       {:bandit, "~> 1.5"},
       {:faker, "~> 0.17"},
       {:timex, "~> 3.7"},
-      {:flop_phoenix, "~> 0.23.0"}
+      {:flop_phoenix, "~> 0.23.0"},
+      {:goth, "~> 1.1"},
+      {:google_api_sheets, "~> 0.11.0"}
     ]
   end
 

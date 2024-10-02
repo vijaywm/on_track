@@ -35,3 +35,5 @@ on_track-*.tar
 npm-debug.log
 /assets/node_modules/
 
+secrets.exs
+*credentials*
