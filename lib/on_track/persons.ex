@@ -18,7 +18,9 @@ defmodule OnTrack.Persons do
 
   """
   def list_persons(params \\ %{}) do
-    case Flop.validate_and_run(Person, params, for: Person) do
+    opts = [for: Person]
+
+    case Flop.validate_and_run(Person, params, opts) do
       {:ok, {persons, meta}} ->
         %{persons: persons, meta: meta}
 

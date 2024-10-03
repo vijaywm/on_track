@@ -3,6 +3,8 @@ defmodule OnTrackWeb.TripsLive.Index do
   alias OnTrack.Trips
 
   def render(assigns) do
+    time_format = "{WDshort}, {D} {h12}:{m} {AM}"
+
     ~H"""
     <Flop.Phoenix.table
       opts={OnTrackWeb.FlopConfig.table_opts()}
@@ -18,10 +20,10 @@ defmodule OnTrackWeb.TripsLive.Index do
       <:col :let={trip} label="Status" field={:status}><%= trip.status %></:col>
       <:col :let={trip} label="PAX" field={:pax}><%= trip.pax %></:col>
       <:col :let={trip} label="Start" field={:start_time}>
-        <%= Timex.format!(trip.start_time, "{WDshort}, {D} {h12}:{m} {AM}") %>
+        <%= (trip.start_time && Timex.format!(trip.start_time, time_format)) || "" %>
       </:col>
       <:col :let={trip} label="ETA" field={:eta}>
-        <%= Timex.format!(trip.eta, "{WDshort}, {D} {h12}:{m} {AM}") %>
+        <%= (trip.eta && Timex.format!(trip.eta, time_format)) || "" %>
       </:col>
     </Flop.Phoenix.table>
 

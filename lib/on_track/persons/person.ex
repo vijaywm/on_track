@@ -6,7 +6,7 @@ defmodule OnTrack.Persons.Person do
     Flop.Schema,
     filterable: [:full_name, :center, :trip_group],
     sortable: [:full_name, :center, :trip_group],
-    default_limit: 15
+    default_limit: 100
   }
 
   schema "persons" do

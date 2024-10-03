@@ -20,11 +20,7 @@ defmodule OnTrackWeb.Router do
   scope "/", OnTrackWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    # get "/trips", TripController, :index
-    # get "/my_trips", TripController, :my_trips
-    # live "/trips", TripsLive, :index
-
+    live "/", HomeLive.Index, :index
     live "/trips", TripsLive.Index, :index
     live "/trips/:id", TripsLive.Show, :show
 

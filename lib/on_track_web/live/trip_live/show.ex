@@ -4,7 +4,16 @@ defmodule OnTrackWeb.TripsLive.Show do
   alias OnTrack.Persons
 
   def handle_params(params, _uri, socket) do
-    trip = Trips.get_trip!(34)
+    trip = Trips.get_trip!(params["id"])
+
+    params =
+      Map.put(params, "filters", [
+        %{
+          "field" => "trip_group",
+          "op" => "==",
+          "value" => trip.trip_group
+        }
+      ])
 
     %{persons: persons, meta: meta} = Persons.list_persons(params)
 
@@ -39,6 +48,7 @@ defmodule OnTrackWeb.TripsLive.Show do
         path={~p"/persons"}
       >
         <:col :let={person} label="Name" field={:full_name}><%= person.full_name %></:col>
+        <:col :let={person} label="ID" field={:person_id}><%= person.person_id %></:col>
         <:col :let={person} label="Center" field={:center}><%= person.center %></:col>
         <:col :let={person} label="Age" field={:age}><%= person.age %></:col>
         <:col :let={person} label="M/F" field={:gender}><%= person.gender %></:col>
